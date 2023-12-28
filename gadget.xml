@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Module>
-  <ModulePrefs title="JIRA Issues" author_email="adent@example.com" directory_title="JIRA Issues"
-      screenshot="http://labs.atlassian.com/svn/GADGETS/trunk/jira-issues/basic/jira-issues-screenshot.png" 
-      thumbnail="http://labs.atlassian.com/svn/GADGETS/trunk/jira-issues/basic/jira-issues-thumbnail.png">
-    <Require feature="minimessage" />
-    <Optional feature="dynamic-height" />
-  </ModulePrefs>
-  <UserPref name="show_date" display_name="Show Dates?" datatype="bool" default_value="true"/>
-
-  <UserPref name="show_summ" display_name="Show Summaries?" datatype="bool" default_value="true"/>
-  <UserPref name="num_entries" display_name="Number of Entries:" default_value="5"/>
-  <Content type="html">
+<ModulePrefs title="JJ" directory_title="Jira" height="200" author="Atlassian" description="JJ" thumbnail="https://jira.k8s2.grupocgd.com/s/-6iooqa/820007/1dlckms/8.20.7/_/download/resources/com.pyxis.greenhopper.jira:greenhopper-gadget-rapid-view/images/gadgets/gh-sprint-days-remaining-preview.png">
+<Require feature="oauthpopup"/>
+<OAuth>
+<Service>
+<Access url="https://jira.k8s2.grupocgd.com/plugins/servlet/oauth/access-token" method="POST"/>
+<Request url="https://jira.k8s2.grupocgd.com/plugins/servlet/oauth/request-token" method="POST"/>
+<Authorization url="https://jira.k8s2.grupocgd.com/plugins/servlet/oauth/authorize?oauth_callback=http%3A%2F%2Foauth.gmodules.com%2Fgadgets%2Foauthcallback"/>
+</Service>
+</OAuth>
+<Require feature="minimessage"/>
+<Require feature="setprefs"/>
+<Require feature="views"/>
+<Require feature="settitle"/>
+<Require feature="dynamic-height"/>
+<Optional feature="auth-refresh"/>
+<Optional feature="atlassian.util"/>
+<Optional feature="gadget-directory">
+<Param name="categories"> JIRA Wallboard </Param>
+</Optional>
+</ModulePrefs>
+<UserPref name="isConfigured" datatype="hidden" default_value="false"/>
+<UserPref name="rapidViewId" datatype="hidden"/>
+<UserPref name="showRapidViewName" datatype="hidden" default_value="false"/>
+<UserPref name="sprintId" datatype="hidden"/>
+<UserPref name="showSprintName" datatype="hidden" default_value="false"/>
+<UserPref name="refresh" datatype="hidden" default_value="false"/>
+<Content type="html">
      <![CDATA[ 
        Hello, world!
      ]]>
-   </Content> 
+</Content> 
 </Module>
