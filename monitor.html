@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+</head>
+<body class="container-fluid">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<style>
+  .NORMAL{
+    color: orange;
+    background-color:  rgb(222, 222, 231);
+  }
+  .EXCESS{
+    color: green;
+    background-color: rgb(222, 222, 231);
+  }
+  .MARGIN{
+    color: red;
+    background-color: rgb(222, 222, 231); 
+  }
+
+  .SUPERUP{
+    color: orange;
+    background-color: green;
+  }
+  .STABLE{
+    color: black;
+    background-color: orange;
+  }
+  .UP{
+    color: black;
+    background-color: rgb(23, 128, 140); 
+  }
+
+  .table-bordered td, .table-bordered th {
+    border: 1px solid #dee2e6;
+    border-color: black;
+  }
+  .table thead th {
+      border: 1px solid #dee2e6;
+      border-color: black;
+  }
+</style>
+<script>
+setInterval(function(){
+  
+  $.ajax({
+    "url":"/api/getMarginAssets",
+    "success":function(data){
+    try{
+      /*data.indicators.forEach(element => {
+        console.log(element.symbol,element.trend)
+        $("#"+ element.symbol.replace('.','') +"_trend").html(element.trend);
+       
+      });
+      */
+
+      data.symbols.forEach(element => {
+
+        $("#"+ element.symbol.replace('.','')).removeClass();
+        if (element.status != null) {
+           $("#"+ element.symbol.replace('.','')).addClass( element.status );
+        }
+        console.log(element.symbol,element.lastPrice, element.priceChangePercent)
+        if (element.symbol == 'BTCUSDT')
+         {
+          window.document.title = "Hi - "+  element.lastPrice;
+         }
+        $("#total").html("Pos: " + data.total + " " + data.prev_totalglobal + " " + ((data.total-data.prev_totalglobal)/data.prev_totalglobal*100).toFixed(2) + "%");
+          
+        
+        $("#"+ element.symbol + "_lastPrice").html( ( element.lastPrice * 1).toFixed(7));
+        $("#"+ element.symbol + "_priceChangePercent").html( ( element.priceChangePercent * 1).toFixed(2));
+        
+        $("#"+ element.symbol + "_qtd").html( ( element.qtd * 1).toFixed(4));
+        $("#"+ element.symbol + "_balance").html( ( element.balance * 1).toFixed(2));
+        $("#"+ element.symbol + "_margin").html( ( element.margin * 1).toFixed(3));
+        $("#"+ element.symbol + "_freeloan").html( ( element.freeloan * 1).toFixed(2));
+        $("#"+ element.symbol + "_netvalue").html( ( element.netvalue * 1).toFixed(2));
+        $("#"+ element.symbol + "_borrowed").html( ( element.borrowed * 1).toFixed(2));
+
+      }
+      )
+    }
+    catch(Err){
+      console.log(Err);
+    }
+
+    },
+         "error":function(error){
+         //handle error here
+         console.log(error);
+         }
+  })
+  
+},10000);
+</script>
+
+<main>
+  <div class="row">
+    
+      <h1 id="total">P: <%= total %>  <%= prev_totalglobal %> <%= ((total-prev_totalglobal)/prev_totalglobal*100).toFixed(2) %>%</h1>
+
+      <table class="table table-bordered" style="border-color: black;"> <!--</table> table-striped">-->
+      <tr>
+        <th>symbol</th>
+        <th>price</th>
+        <th>change</th>
+        <th>qtd</th>
+        <th>margin</th>
+        <th>balance</th>
+        <th>freeLoan</th>
+        <th>netvalue</th>
+        <th>borrowed</th>
+        
+     
+      </tr>
+      
+  
+   
+          <tr id="BTCUSDT" class="">
+            
+          <th>BTCUSDT</th>
+          
+          <th id="BTCUSDT_lastPrice"></th>
+<th id="BTCUSDT_priceChangePercente"></th>
+<th id="BTCUSDT_qtd"></th>
+<th id="BTCUSDT_margin"></th>
+<th id="BTCUSDT_balance"></th>
+<th id="BTCUSDT_floan"></th>
+<th id="BTCUSDT_netvalue"></th>
+<th id="BTCUSDT_borrowed"></th>
+
+
+          
+      </tr>
+
+    
+    </table>
+  </div>
+</main>
+
+
+
+</body>
+</html>
